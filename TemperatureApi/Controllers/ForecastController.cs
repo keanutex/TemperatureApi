@@ -16,7 +16,7 @@ namespace TemperatureApi.Controllers
         [HttpGet("ByName")]
         public async Task<IActionResult> ByName(string cityName, int days)
         {
-            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key=27e6d089e4a04e0db4092022200808&q={HttpUtility.UrlEncode(cityName)}&days={HttpUtility.UrlEncode(days.ToString())}");
+            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(cityName)}&days={HttpUtility.UrlEncode(days.ToString())}");
 
             ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
 
@@ -26,7 +26,7 @@ namespace TemperatureApi.Controllers
         [HttpGet("ByLonLat")]
         public async Task<IActionResult> ByLonLat(string lat, string lon, int days)
         {
-            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key=27e6d089e4a04e0db4092022200808&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
 
             ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
 
