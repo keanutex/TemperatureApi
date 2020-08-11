@@ -26,7 +26,7 @@ namespace TemperatureApi
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v0.0.1", new OpenApiInfo { Title = "Temperature API", Version = "v1", Description = "ASP.NET Core API for weather", });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Temperature API", Version = "v1", Description = "ASP.NET Core API for weather", });
 
                 /*var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
