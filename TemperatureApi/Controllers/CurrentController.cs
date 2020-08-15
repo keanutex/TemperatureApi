@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TemperatureApi.Model;
+using TemperatureApi.Models;
 
 namespace TemperatureApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CurrentController : ControllerBase
@@ -23,6 +21,7 @@ namespace TemperatureApi.Controllers
             return Ok(apiresponse);
         }
 
+       
         [HttpGet("ByLonLat")]
         public async Task<IActionResult> CurrentByLonLat(string lat, string lon)
         {
