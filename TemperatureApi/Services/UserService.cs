@@ -9,24 +9,28 @@ using System.Text;
 using TemperatureApi.Entities;
 using TemperatureApi.Helpers;
 using TemperatureApi.Models;
+using Dapper;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace TemperatureApi.Services
 {
-
     public interface IUserService
     {
-        AuthenticateResponse Authenticate(AuthenticateRequest model);
-        IEnumerable<User> GetAll();
+        AuthenticateResponse Authenticate(AuthenticateRequest model, IConfiguration configuration);
+        List<User> GetAll(IConfiguration configuration);
         User GetById(int id);
     }
 
     public class UserService : IUserService
     {
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<User> _users = new List<User>
-        {
-            new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
-        };
+        private List<User> _users = new List<User>();
+        //{
+        //    new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
+        //};
 
         private readonly AppSettings _appSettings;
 
@@ -34,9 +38,10 @@ namespace TemperatureApi.Services
         {
             _appSettings = appSettings.Value;
         }
-
-        public AuthenticateResponse Authenticate(AuthenticateRequest model)
+       
+        public AuthenticateResponse Authenticate(AuthenticateRequest model, IConfiguration configuration)
         {
+            _users = GetAll(configuration);
             var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
 
             // return null if user not found
@@ -48,8 +53,14 @@ namespace TemperatureApi.Services
             return new AuthenticateResponse(user, token);
         }
 
-        public IEnumerable<User> GetAll()
+        public List<User> GetAll(IConfiguration configuration)
         {
+            string connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
+            Console.WriteLine(connectionString);
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                _users = db.Query<User>("Select * From Users").ToList();
+            }
             return _users;
         }
 
