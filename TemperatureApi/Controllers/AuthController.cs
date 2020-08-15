@@ -7,10 +7,10 @@ using TemperatureApi.Models;
 namespace TemperatureApi.Controllers
 {
     [ApiController]
-    [Route("v1/[controller]")]
+    [Route("[controller]")]
     public class AuthController : ControllerBase
     {
-        [HttpPost]
+        [HttpPost("getToken")]
         public async Task<ActionResult> GetToken([FromForm]LoginInfo loginInfo)
         {
             string uri = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyAHdMx9404tm15RidD_7jF2C4phFaHGt_g";
