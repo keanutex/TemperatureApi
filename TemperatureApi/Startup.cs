@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System;
-using System.IO;
-using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,7 +9,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
-using System;
 using System.Collections.Generic;
 using TemperatureApi.Helpers;
 
@@ -81,6 +78,27 @@ namespace TemperatureApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Temperature API", Version = "v1", Description = "ASP.NET Core API for weather", });
 
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+
+                    Type = SecuritySchemeType.OAuth2,
+
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        Password = new OpenApiOAuthFlow
+                        {
+                            TokenUrl = new Uri("/auth", UriKind.Relative),
+                            Extensions = new Dictionary<string, IOpenApiExtension>
+                                {
+                                    { "returnSecureToken", new OpenApiBoolean(true) },
+                                },
+
+                        }
+
+                    }
+                });
+                c.OperationFilter<AuthorizeCheckOperationFilter>();
+
                 /*var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);*/
@@ -90,11 +108,8 @@ namespace TemperatureApi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
