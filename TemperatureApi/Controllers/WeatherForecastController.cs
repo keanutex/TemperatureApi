@@ -9,6 +9,7 @@ using TemperatureApi.Model;
 
 namespace TemperatureApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

@@ -19,18 +19,16 @@ namespace TemperatureApi.Services
 {
     public interface IUserService
     {
-        AuthenticateResponse Authenticate(AuthenticateRequest model, IConfiguration configuration);
-        List<User> GetAll(IConfiguration configuration);
-        User GetById(int id);
+        AuthenticateResponse Authenticate(AuthenticateRequest model);
+        List<User> GetAll(AuthenticateRequest model);
+        User GetByUsername(string username);
+        User registerUser(User user);
     }
 
     public class UserService : IUserService
     {
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
         private List<User> _users = new List<User>();
-        //{
-        //    new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
-        //};
 
         private readonly AppSettings _appSettings;
 
@@ -39,9 +37,9 @@ namespace TemperatureApi.Services
             _appSettings = appSettings.Value;
         }
        
-        public AuthenticateResponse Authenticate(AuthenticateRequest model, IConfiguration configuration)
+        public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            _users = GetAll(configuration);
+            _users = GetAll(model);
             var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
 
             // return null if user not found
@@ -53,23 +51,27 @@ namespace TemperatureApi.Services
             return new AuthenticateResponse(user, token);
         }
 
-        public List<User> GetAll(IConfiguration configuration)
+        public List<User> GetAll(AuthenticateRequest model)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
-            Console.WriteLine(connectionString);
+            string connectionString = _appSettings.ConnectionString;
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                _users = db.Query<User>("Select * From Users").ToList();
+                //_users = db.Query<User>("Select * From Users").ToList();
+                //TODO
+                //SqlParameter @username = new SqlParameter("@username", SqlDbType.VarChar) { Value = model.Username };
+                //SqlParameter @password = new SqlParameter("@password", SqlDbType.VarChar) { Value = model.Password };
+                var query = $"SELECT username, password FROM Users WHERE username LIKE '{model.Username}' AND password LIKE '{model.Password}'";
+                //var query = "SELECT username, password FROM Users WHERE username LIKE @username AND password LIKE @password";
+                _users = db.Query<User>(query).ToList();
             }
             return _users;
         }
 
-        public User GetById(int id)
+        public User GetByUsername(string username)
         {
-            return _users.FirstOrDefault(x => x.Id == id);
+            _users = getUsersFromDB();
+            return _users.FirstOrDefault(x => x.Username.Equals(username));
         }
-
-        // helper methods
 
         private string generateJwtToken(User user)
         {
@@ -78,12 +80,42 @@ namespace TemperatureApi.Services
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("username", user.Username) }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public User registerUser(User user) {
+
+            //check user not already registered
+            string connectionString = _appSettings.ConnectionString;
+
+            _users = getUsersFromDB();
+            foreach (User x in _users)
+            {
+                if ((x.Username).Equals(user.Username))
+                    return null;
+            }
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                var query = $"INSERT INTO Users (FirstName, LastName, Username, Password) VALUES('{user.FirstName}','{user.LastName}', '{user.Username}', '{user.Password}')";
+                var result = db.Execute(query);
+            }
+            return user;
+        }
+        public List<User> getUsersFromDB()
+        {
+            string connectionString = _appSettings.ConnectionString;
+
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                var query = "SELECT FirstName, LastName, Username, Password FROM Users";
+                _users = db.Query<User>(query).ToList();
+            }
+            return _users;
         }
     }
 }
