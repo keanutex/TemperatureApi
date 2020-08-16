@@ -48,7 +48,7 @@ namespace TemperatureApi
                     {
                         Password = new OpenApiOAuthFlow
                         {
-                            TokenUrl = new Uri("api/Users/authenticate", UriKind.Absolute),
+                            TokenUrl = new Uri("api/Users/authenticate", UriKind.Relative),
                             Extensions = new Dictionary<string, IOpenApiExtension>
                                 {
                                     { "returnSecureToken", new OpenApiBoolean(true) },
@@ -74,7 +74,7 @@ namespace TemperatureApi
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                //c.RoutePrefix = "";
+                c.RoutePrefix = "";
             });
 
             if (env.IsDevelopment())
