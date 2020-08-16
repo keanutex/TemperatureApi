@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -12,35 +11,30 @@ using TemperatureApi.Models;
 using Dapper;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
-using Microsoft.Extensions.Configuration;
 
 namespace TemperatureApi.Services
 {
-    public interface IUserService
+    public class UserService
     {
-        AuthenticateResponse Authenticate(AuthenticateRequest model);
-        List<User> GetAll(AuthenticateRequest model);
-        User GetByUsername(string username);
-        User registerUser(User user);
-    }
-
-    public class UserService : IUserService
-    {
-        // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<User> _users = new List<User>();
-
         private readonly AppSettings _appSettings;
+
+        private static string connectionString;
 
         public UserService(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
+            connectionString = _appSettings.ConnectionString;
         }
        
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            _users = GetAll(model);
-            var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+            User user = null;
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                var x = new { username = model.Username, password = model.Password };
+                var query = "SELECT FirstName, LastName, Username FROM Users WHERE Username LIKE @username AND Password LIKE @password";
+                user =  db.Query<User>(query,x).FirstOrDefault();
+            }
 
             // return null if user not found
             if (user == null) return null;
@@ -51,26 +45,14 @@ namespace TemperatureApi.Services
             return new AuthenticateResponse(user, token);
         }
 
-        public List<User> GetAll(AuthenticateRequest model)
-        {
-            string connectionString = _appSettings.ConnectionString;
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                //_users = db.Query<User>("Select * From Users").ToList();
-                //TODO
-                //SqlParameter @username = new SqlParameter("@username", SqlDbType.VarChar) { Value = model.Username };
-                //SqlParameter @password = new SqlParameter("@password", SqlDbType.VarChar) { Value = model.Password };
-                var query = $"SELECT username, password FROM Users WHERE username LIKE '{model.Username}' AND password LIKE '{model.Password}'";
-                //var query = "SELECT username, password FROM Users WHERE username LIKE @username AND password LIKE @password";
-                _users = db.Query<User>(query).ToList();
-            }
-            return _users;
-        }
-
         public User GetByUsername(string username)
         {
-            _users = getUsersFromDB();
-            return _users.FirstOrDefault(x => x.Username.Equals(username));
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                var x = new { name = username };
+                var query = $"SELECT FirstName, LastName, Username FROM Users WHERE Username LIKE @name";
+                return db.Query<User>(query, x).FirstOrDefault();
+            } 
         }
 
         private string generateJwtToken(User user)
@@ -91,31 +73,16 @@ namespace TemperatureApi.Services
         public User registerUser(User user) {
 
             //check user not already registered
-            string connectionString = _appSettings.ConnectionString;
+            if (GetByUsername(user.Username) != null)
+                return null;
 
-            _users = getUsersFromDB();
-            foreach (User x in _users)
-            {
-                if ((x.Username).Equals(user.Username))
-                    return null;
-            }
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var query = $"INSERT INTO Users (FirstName, LastName, Username, Password) VALUES('{user.FirstName}','{user.LastName}', '{user.Username}', '{user.Password}')";
-                var result = db.Execute(query);
+                var x = new { firstname = user.FirstName, lastname = user.LastName, username = user.Username, password = user.Password };
+                var query = "INSERT INTO Users (FirstName, LastName, Username, Password) VALUES( @firstname, @lastname, @username, @password)";
+                db.Execute(query, x);
             }
             return user;
-        }
-        public List<User> getUsersFromDB()
-        {
-            string connectionString = _appSettings.ConnectionString;
-
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                var query = "SELECT FirstName, LastName, Username, Password FROM Users";
-                _users = db.Query<User>(query).ToList();
-            }
-            return _users;
         }
     }
 }

@@ -1,20 +1,12 @@
-using System;
-using System.IO;
-using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using TemperatureApi.Helpers;
 using TemperatureApi.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
-using System.Text;
 
 namespace TemperatureApi
 {
@@ -35,11 +27,9 @@ namespace TemperatureApi
 
             services.AddTransient<UserService>();
 
-            // configure strongly typed settings object
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
-            // configure DI for application services
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<UserService>();
 
             services.AddSwaggerGen(c =>
             {
@@ -73,27 +63,7 @@ namespace TemperatureApi
                         new List<string>()
                     }
                 });
-
-
-                //    , new OpenApiSecurityScheme
-                //{
-                //    In = ParameterLocation.Header,
-                //    Description = "Please insert JWT with Bearer into field",
-                //    Name = "Authorization",
-                //    Type = SecuritySchemeType.ApiKey
-                //});
-                //c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-                //   {
-                //     new OpenApiSecurityScheme
-                //     {
-                //       Reference = new OpenApiReference
-                //       {
-                //         Type = ReferenceType.SecurityScheme,
-                //         Id = "Bearer"
-                //       }
-                //      },
-                //      new string[] { }
-                //    }
+                
                 /*var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                    c.IncludeXmlComments(xmlPath);*/
@@ -125,10 +95,9 @@ namespace TemperatureApi
                .AllowAnyMethod()
                .AllowAnyHeader());
 
-            //app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
-            // custom jwt auth middleware
             app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
