@@ -1,6 +1,4 @@
-﻿using TemperatureApi.Entities;
-
-namespace TemperatureApi.Models
+﻿namespace TemperatureApi.Models
 {
     public class AuthenticateResponse
     {

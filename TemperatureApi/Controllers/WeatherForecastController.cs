@@ -5,7 +5,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using TemperatureApi.Model;
+using TemperatureApi.Models;
 
 namespace TemperatureApi.Controllers
 {

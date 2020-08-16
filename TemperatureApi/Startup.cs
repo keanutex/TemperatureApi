@@ -6,13 +6,8 @@ using Microsoft.Extensions.Hosting;
 using TemperatureApi.Helpers;
 using TemperatureApi.Services;
 using Microsoft.OpenApi.Models;
-using System.Collections.Generic;
-using Microsoft.OpenApi.Interfaces;
 using System;
-using Microsoft.OpenApi.Any;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace TemperatureApi
 {
@@ -37,73 +32,17 @@ namespace TemperatureApi
 
             services.AddScoped<UserService>();
 
-            // parameter sets default scheme
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //.AddJwtBearer(options =>
-            //{
-            //    // validation configuration
-            //    options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuer = false,
-            //        ValidateAudience = false,
-            //        ValidateIssuerSigningKey = false,
-            //        ValidateLifetime = false,
-            //        ValidIssuer = Configuration["Jwt:Issuer"],
-            //        // key type depends on token encryption method
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Secret"]))
-            //    };
-            //});
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Temperature API", Version = "v1", Description = "ASP.NET Core API for weather", });
-                //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                //{
-                //    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
-                //    Name = "Authorization",
-                //    In = ParameterLocation.Header,
-                //    Type = SecuritySchemeType.ApiKey,
-                //    Scheme = "Bearer"
-                //});
-                //c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                //{
-                //    new OpenApiSecurityScheme
-                //    {
-                //        Reference = new OpenApiReference
-                //        {
-                //            Type = ReferenceType.SecurityScheme,
-                //            Id = "tomsAuth"
-                //        }
-                //    },
-                //    new List<string>()
-                //});
 
-                //c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-                //{
-                //    Type = SecuritySchemeType.OAuth2,
-                //    In = ParameterLocation.Header,
-                //    Flows = new OpenApiOAuthFlows
-                //    {
-                //        Password = new OpenApiOAuthFlow
-                //        {
-                //            TokenUrl = new Uri("api/Users/authenticate", UriKind.Relative),
-                //            Extensions = new Dictionary<string, IOpenApiExtension>
-                //                {
-                //                    { "returnSecureToken", new OpenApiBoolean(true) },
-                //                },
-                //        }
-                //    }
-                //});
-                //c.OperationFilter<AuthorizeCheckOperationFilter>();
-
-                //c.OperationFilter<AuthenticationRequirementsOperationFilter>();
                 var securityScheme = new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
                     Description = "Enter JWT Bearer authorisation token",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.Http,
-                    Scheme = "bearer", // must be lowercase!!!
+                    Scheme = "bearer", // must be lowercase
                     BearerFormat = "Bearer {token}",
                     Reference = new OpenApiReference
                     {
