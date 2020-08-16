@@ -39,8 +39,8 @@ namespace TemperatureApi.Controllers
         {
             var response = _userService.registerUser(user);
 
-            if (response == null)
-                return BadRequest(new { message = "User already exists" });
+            if (response.Equals("User already exists"))
+                return BadRequest(response);
 
             return Ok(response);
         }

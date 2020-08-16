@@ -11,6 +11,7 @@ using TemperatureApi.Models;
 using Dapper;
 using System.Data;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace TemperatureApi.Services
 {
@@ -31,7 +32,7 @@ namespace TemperatureApi.Services
             User user = null;
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var x = new { username = model.Username, password = model.Password };
+                var x = new { username = model.Username, password = hashPassword(model.Password) };
                 var query = "SELECT FirstName, LastName, Username FROM Users WHERE Username LIKE @username AND Password LIKE @password";
                 user =  db.Query<User>(query,x).FirstOrDefault();
             }
@@ -70,19 +71,33 @@ namespace TemperatureApi.Services
             return tokenHandler.WriteToken(token);
         }
 
-        public User registerUser(User user) {
+        public String registerUser(User user) {
 
             //check user not already registered
             if (GetByUsername(user.Username) != null)
-                return null;
+                return "User already exists";
 
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var x = new { firstname = user.FirstName, lastname = user.LastName, username = user.Username, password = user.Password };
+                var x = new { firstname = user.FirstName, lastname = user.LastName, username = user.Username, password = hashPassword(user.Password) };
                 var query = "INSERT INTO Users (FirstName, LastName, Username, Password) VALUES( @firstname, @lastname, @username, @password)";
                 db.Execute(query, x);
             }
-            return user;
+            return "User successfully registered";
+        }
+
+        private string hashPassword(String password)
+        {
+            byte[] salt = new byte[16] {198,211,143,7,130,128,198,53,104,130,191,46,105,139,126,191};
+
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: password,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA1,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8));
+           
+            return hashed;
         }
     }
 }
