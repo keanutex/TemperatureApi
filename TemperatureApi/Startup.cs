@@ -7,6 +7,9 @@ using TemperatureApi.Helpers;
 using TemperatureApi.Services;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
+using Microsoft.OpenApi.Interfaces;
+using System;
+using Microsoft.OpenApi.Any;
 
 namespace TemperatureApi
 {
@@ -36,34 +39,27 @@ namespace TemperatureApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Temperature API", Version = "v1", Description = "ASP.NET Core API for weather", });
 
 
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
-                });
 
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                {
+                    Type = SecuritySchemeType.OAuth2,
+
+                    Flows = new OpenApiOAuthFlows
                     {
-                        new OpenApiSecurityScheme
+                        Password = new OpenApiOAuthFlow
                         {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            },
-                            Scheme = "oauth2",
-                            Name = "Bearer",
-                            In = ParameterLocation.Header,
+                            TokenUrl = new Uri("api/Users/authenticate", UriKind.Absolute),
+                            Extensions = new Dictionary<string, IOpenApiExtension>
+                                {
+                                    { "returnSecureToken", new OpenApiBoolean(true) },
+                                },
 
-                        },
-                        new List<string>()
+                        }
+
                     }
                 });
-                
+                //c.OperationFilter<AuthorizeCheckOperationFilter>();
+
                 /*var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                    c.IncludeXmlComments(xmlPath);*/
@@ -78,7 +74,7 @@ namespace TemperatureApi
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = "swagger";
+                //c.RoutePrefix = "";
             });
 
             if (env.IsDevelopment())
