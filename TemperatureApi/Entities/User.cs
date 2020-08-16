@@ -10,5 +10,6 @@ namespace TemperatureApi.Entities
 
         //[JsonIgnore]
         public string Password { get; set; }
+        //public string grant_type { get; set; }
     }
 }

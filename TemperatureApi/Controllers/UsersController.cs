@@ -24,7 +24,7 @@ namespace TemperatureApi.Controllers
         }
 
         [HttpPost("authenticate")]
-        public IActionResult Authenticate(AuthenticateRequest model)
+        public IActionResult Authenticate([FromForm] AuthenticateRequest model)
         {
             var response = _userService.Authenticate(model);
 
@@ -43,13 +43,6 @@ namespace TemperatureApi.Controllers
                 return BadRequest(response);
 
             return Ok(response);
-        }
-
-        [Authorize]
-        [HttpGet("test")]
-        public IActionResult test()
-        {
-            return Ok("test successful");
         }
     }
 }

@@ -37,13 +37,10 @@ namespace TemperatureApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Temperature API", Version = "v1", Description = "ASP.NET Core API for weather", });
-
-
+                
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
-
                     Type = SecuritySchemeType.OAuth2,
-
                     Flows = new OpenApiOAuthFlows
                     {
                         Password = new OpenApiOAuthFlow
@@ -53,12 +50,10 @@ namespace TemperatureApi
                                 {
                                     { "returnSecureToken", new OpenApiBoolean(true) },
                                 },
-
                         }
-
                     }
                 });
-                //c.OperationFilter<AuthorizeCheckOperationFilter>();
+                c.OperationFilter<AuthorizeCheckOperationFilter>();
 
                 /*var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
