@@ -32,6 +32,8 @@ namespace TemperatureApi
 
             services.AddScoped<UserService>();
 
+            services.AddScoped<UserDataService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Temperature API", Version = "v1", Description = "ASP.NET Core API for weather", });
