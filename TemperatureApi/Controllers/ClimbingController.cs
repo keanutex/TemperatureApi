@@ -36,6 +36,50 @@ namespace TemperatureApi.Controllers
 
             return Ok(windDataDto);
         }
+
+        [HttpGet("pressure")]
+        public async Task<IActionResult> GetPressure(string lat, string lon, int days)
+        {
+            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+
+            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+            PressureDataDto pressureDataDto = apiresponse.ToPressureDataDto();
+
+            return Ok(pressureDataDto);
+        }
+
+        [HttpGet("precip")]
+        public async Task<IActionResult> GetPrecip(string lat, string lon, int days)
+        {
+            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+
+            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+            PrecipDataDto precipDataDto = apiresponse.ToPrecipDataDto();
+
+            return Ok(precipDataDto);
+        }
+
+        [HttpGet("humidity")]
+        public async Task<IActionResult> GetHumidity(string lat, string lon, int days)
+        {
+            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+
+            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+            HumidityDataDto humidityDataDto = apiresponse.ToHumidityDataDto();
+
+            return Ok(humidityDataDto);
+        }
+
+        [HttpGet("Sunrise")]
+        public async Task<IActionResult> GetSunrise(string lat, string lon, int days)
+        {
+            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+
+            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+            SunriseDataDto sunriseDataDto = apiresponse.ToSunriseDataDto();
+
+            return Ok(sunriseDataDto);
+        }
     }
 }
    

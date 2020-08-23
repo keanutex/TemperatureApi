@@ -19,5 +19,47 @@ namespace TemperatureApi.Models
                 wind_dir = forecastResponse.current.wind_dir
             };
         }
+
+        public static PressureDataDto ToPressureDataDto(this ForecastResponse forecastResponse)
+        {
+
+            return new PressureDataDto()
+            {
+                pressure_mb = forecastResponse.current.pressure_mb,
+                pressure_in = forecastResponse.current.pressure_in
+            };
+        }
+
+        public static PrecipDataDto ToPrecipDataDto(this ForecastResponse forecastResponse)
+        {
+
+            return new PrecipDataDto()
+            {
+                precip_mm = forecastResponse.current.precip_mm,
+                precip_in = forecastResponse.current.precip_in
+            };
+        }
+
+        public static HumidityDataDto ToHumidityDataDto(this ForecastResponse forecastResponse)
+        {
+
+            return new HumidityDataDto()
+            {
+                humidity = forecastResponse.current.humidity
+            };
+        }
+
+        public static SunriseDataDto ToSunriseDataDto(this ForecastResponse forecastResponse)
+        {
+
+            return new SunriseDataDto()
+            {
+                sunrise = forecastResponse.forecast.forecastday[0].astro.sunrise
+
+                //for(ForecastDataDay in forecastResponse.forecast)
+                //sunrises[]
+               
+            };
+        }
     }
 }
