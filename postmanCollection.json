@@ -18,12 +18,14 @@
 					}
 				],
 				"url": {
-					"raw": "https://localhost:5001/api/current/ByName?cityname=potchefstroom",
-					"protocol": "https",
+					"raw": "tempapi.westeurope.cloudapp.azure.com/api/current/ByName?cityname=Johannesburg",
 					"host": [
-						"localhost"
+						"tempapi",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
 					],
-					"port": "5001",
 					"path": [
 						"api",
 						"current",
@@ -32,7 +34,8 @@
 					"query": [
 						{
 							"key": "cityname",
-							"value": "potchefstroom"
+							"value": "Johannesburg",
+							"description": "Name of a city."
 						}
 					]
 				}
@@ -46,20 +49,34 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtlYW51dGV4IiwibmJmIjoxNTk3ODUwNzk4LCJleHAiOjE1OTg0NTU1OTgsImlhdCI6MTU5Nzg1MDc5OH0.FZ4hpnjqjTZx9AvfUgf_-yT7lQ4k4D5IGeZqaq9hYJY",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "?lat&lon",
+					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Current/ByLonLat?lat=0&lon=0",
+					"host": [
+						"tempapi",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"path": [
+						"api",
+						"Current",
+						"ByLonLat"
+					],
 					"query": [
 						{
 							"key": "lat",
-							"value": null
+							"value": "0",
+							"description": "Latitude of location."
 						},
 						{
 							"key": "lon",
-							"value": null
+							"value": "0",
+							"description": "Longitude of location."
 						}
 					]
 				}
@@ -78,15 +95,29 @@
 					}
 				],
 				"url": {
-					"raw": "?cityName&days",
+					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Forecast/ByName?cityName=Pretoria&days=1",
+					"host": [
+						"tempapi",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"path": [
+						"api",
+						"Forecast",
+						"ByName"
+					],
 					"query": [
 						{
 							"key": "cityName",
-							"value": null
+							"value": "Pretoria",
+							"description": "Name of a city."
 						},
 						{
 							"key": "days",
-							"value": null
+							"value": "1",
+							"description": "Numbers of days to forecast. Maximum of 4 days."
 						}
 					]
 				}
@@ -105,19 +136,34 @@
 					}
 				],
 				"url": {
-					"raw": "?lat&lon&days",
+					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Forecast/ByLonLat?lat=0&lon=0&days=1",
+					"host": [
+						"tempapi",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"path": [
+						"api",
+						"Forecast",
+						"ByLonLat"
+					],
 					"query": [
 						{
 							"key": "lat",
-							"value": null
+							"value": "0",
+							"description": "Latitude of location."
 						},
 						{
 							"key": "lon",
-							"value": null
+							"value": "0",
+							"description": "Longitude of location."
 						},
 						{
 							"key": "days",
-							"value": null
+							"value": "1",
+							"description": "Number of days to forecast. Maximum of 4 days."
 						}
 					]
 				}
@@ -130,8 +176,21 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "",
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "Username",
+							"value": "string",
+							"description": "Username used when registering.",
+							"type": "text"
+						},
+						{
+							"key": "Password",
+							"value": "string",
+							"description": "Password used when registering.",
+							"type": "text"
+						}
+					],
 					"options": {
 						"raw": {
 							"language": "json"
@@ -139,16 +198,18 @@
 					}
 				},
 				"url": {
-					"raw": "?Username&Password",
-					"query": [
-						{
-							"key": "Username",
-							"value": null
-						},
-						{
-							"key": "Password",
-							"value": null
-						}
+					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Users/authenticate",
+					"host": [
+						"tempapi",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"path": [
+						"api",
+						"Users",
+						"authenticate"
 					]
 				}
 			},
@@ -169,7 +230,19 @@
 					}
 				},
 				"url": {
-					"raw": ""
+					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Users/register",
+					"host": [
+						"tempapi",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"path": [
+						"api",
+						"Users",
+						"register"
+					]
 				}
 			},
 			"response": []
