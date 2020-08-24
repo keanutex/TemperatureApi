@@ -80,6 +80,17 @@ namespace TemperatureApi.Controllers
 
             return Ok(sunriseDataDto);
         }
+
+        [HttpGet("Suset")]
+        public async Task<IActionResult> GetSunset(string lat, string lon, int days)
+        {
+            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+
+            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+            SunsetDataDto sunsetDataDto = apiresponse.ToSunsetDataDto();
+
+            return Ok(sunsetDataDto);
+        }
     }
 }
    

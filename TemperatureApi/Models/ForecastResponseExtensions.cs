@@ -61,5 +61,18 @@ namespace TemperatureApi.Models
                
             };
         }
+
+        public static SunsetDataDto ToSunsetDataDto(this ForecastResponse forecastResponse)
+        {
+
+            return new SunsetDataDto()
+            {
+                sunset = forecastResponse.forecast.forecastday[0].astro.sunset
+
+                //for(ForecastDataDay in forecastResponse.forecast)
+                //sunrises[]
+
+            };
+        }
     }
 }
