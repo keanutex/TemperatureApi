@@ -6,10 +6,11 @@ using TemperatureApi.Models;
 
 namespace TemperatureApi.Dtos
 {
-     public class PrecipDataDto 
+     public class ElevationDataDto 
     {
-        public double precip_mm { get; set; }
-        public double precip_in { get; set; }
+        public double latitude { get; set; }
+        public int elevation { get; set; }
+        public double longitude { get; set; }
     }
 
 }

@@ -23,6 +23,7 @@ namespace TemperatureApi.Models
         public DayData day { get; set; }
         public AstroData astro { get; set; }
         public HourData hour { get; set; }
+        public ElevationData elevate { get; set; }
     }
 
     public class DayData
@@ -70,8 +71,6 @@ namespace TemperatureApi.Models
         public string wind_dir { get; set; }
         public double pressure_mb { get; set; }
         public double pressure_in { get; set; }
-        public double precip_mm { get; set; }
-        public double precip_in { get; set; }
         public int humidity { get; set; }
         public int cloud { get; set; }
         public double feelslike_c { get; set; }
@@ -91,5 +90,12 @@ namespace TemperatureApi.Models
         public int chance_of_snow { get; set; }
         public double gust_mph { get; set; }
         public double gust_kph { get; set; }
+    }
+
+    public class ElevationData
+    {
+        public int elevation { get; set; }
+        public double longitude { get; set; }
+        public double latitude { get; set; }
     }
 }

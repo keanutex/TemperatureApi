@@ -16,58 +16,48 @@ namespace TemperatureApi.Controllers
     [ApiController]
     public class ClimbingController : ControllerBase
     {
-        [HttpGet("ClimbingConditions")]
-        public async Task<IActionResult> ByLonLat(string lat, string lon, int days)
-        {
-            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
-
-            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
-
-            return Ok(apiresponse);
-        }
-
-        [HttpGet("wind")]
+        [HttpGet("Wind")]
         public async Task<IActionResult> GetWind(string lat, string lon, int days)
         {
             var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
 
             ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
-            WindDataDto windDataDto = apiresponse.ToWindDataDto();
+            List<WindDataDto> list = apiresponse.ToWindDataDto();
 
-            return Ok(windDataDto);
+            return Ok(list);
         }
 
-        [HttpGet("pressure")]
+        [HttpGet("Pressure")]
         public async Task<IActionResult> GetPressure(string lat, string lon, int days)
         {
             var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
 
             ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
-            PressureDataDto pressureDataDto = apiresponse.ToPressureDataDto();
+            List<PressureDataDto> list = apiresponse.ToPressureDataDto();
 
-            return Ok(pressureDataDto);
+            return Ok(list);
         }
 
-        [HttpGet("precip")]
+        [HttpGet("Precipitation")]
         public async Task<IActionResult> GetPrecip(string lat, string lon, int days)
         {
             var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
 
             ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
-            PrecipDataDto precipDataDto = apiresponse.ToPrecipDataDto();
+            List<PrecipitationDataDto> list = apiresponse.ToPrecipitationDataDto();
 
-            return Ok(precipDataDto);
+            return Ok(list);
         }
 
-        [HttpGet("humidity")]
+        [HttpGet("Humidity")]
         public async Task<IActionResult> GetHumidity(string lat, string lon, int days)
         {
             var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
 
             ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
-            HumidityDataDto humidityDataDto = apiresponse.ToHumidityDataDto();
+            List<HumidityDataDto> list = apiresponse.ToHumidityDataDto();
 
-            return Ok(humidityDataDto);
+            return Ok(list);
         }
 
         [HttpGet("Sunrise")]
@@ -76,20 +66,31 @@ namespace TemperatureApi.Controllers
             var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
 
             ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
-            SunriseDataDto sunriseDataDto = apiresponse.ToSunriseDataDto();
+            List<SunriseDataDto> list = apiresponse.ToSunriseDataDto();
 
-            return Ok(sunriseDataDto);
+            return Ok(list);
         }
 
-        [HttpGet("Suset")]
+        [HttpGet("Sunset")]
         public async Task<IActionResult> GetSunset(string lat, string lon, int days)
         {
             var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
 
             ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
-            SunsetDataDto sunsetDataDto = apiresponse.ToSunsetDataDto();
+            List<SunsetDataDto> list = apiresponse.ToSunsetDataDto();
 
-            return Ok(sunsetDataDto);
+            return Ok(list);
+        }
+
+        [HttpGet("Elevation")]
+        public async Task<IActionResult> GetElevation(string lat, string lon)
+        {
+            var apicall = ApiCall.CallAsync<ForecastResponse>($"https://api.open-elevation.com/api/v1/lookup?locations={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}");
+
+            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+            ElevationDataDto elevationDataDto = apiresponse.ToElevationDataDto();
+
+            return Ok(elevationDataDto);
         }
     }
 }

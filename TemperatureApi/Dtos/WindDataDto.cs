@@ -8,12 +8,13 @@ namespace TemperatureApi.Dtos
 {
      public class WindDataDto 
     {
-        public double wind_mph { get; set; }
-        public double wind_kph { get; set; }
-        public int wind_degree { get; set; }
-        public string wind_dir { get; set; }
-
-        
+        public DateTime date { get; set; }
+        public double maxwind_mph { get; set; }
+        public double maxwind_kph { get; set; }
+        //public int wind_degree { get; set; }
+        //public string wind_dir { get; set; }
+        //public double gust_mph { get; set; }
+        //public double gust_kph { get; set; }
     }
 
 }

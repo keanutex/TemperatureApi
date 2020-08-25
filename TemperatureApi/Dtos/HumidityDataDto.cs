@@ -8,6 +8,7 @@ namespace TemperatureApi.Dtos
 {
      public class HumidityDataDto 
     {
+        public DateTime date { get; set; }
         public double humidity { get; set; }
     }
 
