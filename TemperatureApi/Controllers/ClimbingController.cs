@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using TemperatureApi.Dtos;
 using TemperatureApi.Models;
 
@@ -16,23 +11,35 @@ namespace TemperatureApi.Controllers
     [ApiController]
     public class ClimbingController : ControllerBase
     {
-        [HttpGet("Wind")]
-        public async Task<IActionResult> GetWind(string lat, string lon, int days)
+        [HttpGet("GetWindForecast")]
+        public async Task<IActionResult> GetWindForecast(string lat, string lon, int days)
         {
-            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+            if (days > 10 || days <= 0)
+                return BadRequest("Please choose a number of days from 1 --> 10");
 
-            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+            var apiresponse = await ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
             List<WindDataDto> list = apiresponse.ToWindDataDto();
 
             return Ok(list);
         }
 
-        [HttpGet("Pressure")]
-        public async Task<IActionResult> GetPressure(string lat, string lon)
+        [HttpGet("GetAverageWindForecast")]
+        public async Task<IActionResult> GetAverageWindForecast(string lat, string lon, int days)
         {
-            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/current.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}");
+            if (days > 10 || days <= 0)
+                return BadRequest("Please choose a number of days from 1 --> 10");
 
-            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+            var apiresponse = await ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+            var avgWindDataDto = apiresponse.ToAvgWindDataDto();
+
+            return Ok(avgWindDataDto);
+        }
+
+        [HttpGet("GetCurrentPressure")]
+        public async Task<IActionResult> GetCurrentPressure(string lat, string lon)
+        {
+            var apiresponse = await ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/current.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}");
+
             PressureDataDto pressureDataDto = apiresponse.ToPressureDataDto();
 
             return Ok(pressureDataDto);
@@ -49,45 +56,77 @@ namespace TemperatureApi.Controllers
         //    return Ok(list);
         //}
 
-        [HttpGet("Precipitation")]
+        [HttpGet("GetPrecipitationForecast")]
         public async Task<IActionResult> GetPrecip(string lat, string lon, int days)
         {
-            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+            if (days > 10 || days <= 0)
+                return BadRequest("Please choose a number of days from 1 --> 10");
 
-            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+            var apiresponse = await ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+
             List<PrecipitationDataDto> list = apiresponse.ToPrecipitationDataDto();
 
             return Ok(list);
         }
 
-        [HttpGet("Humidity")]
-        public async Task<IActionResult> GetHumidity(string lat, string lon, int days)
+        [HttpGet("GetAveragePrecipitationForecast")]
+        public async Task<IActionResult> GetAveragePrecipitationForecast(string lat, string lon, int days)
         {
-            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+            if (days > 10 || days <= 0)
+                return BadRequest("Please choose a number of days from 1 --> 10");
 
-            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+            var apiresponse = await ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+            var avgPrecipitationDataDto = apiresponse.ToAvgPrecipitationDataDto();
+
+            return Ok(avgPrecipitationDataDto);
+        }
+
+        [HttpGet("GetHumidityForecast")]
+        public async Task<IActionResult> GetHumidityForecast(string lat, string lon, int days)
+        {
+            if (days > 10 || days <= 0)
+                return BadRequest("Please choose a number of days from 1 --> 10");
+
+            var apiresponse = await ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+
             List<HumidityDataDto> list = apiresponse.ToHumidityDataDto();
 
             return Ok(list);
         }
 
-        [HttpGet("Sunrise")]
-        public async Task<IActionResult> GetSunrise(string lat, string lon, int days)
+        [HttpGet("GetAverageHumidityForecast")]
+        public async Task<IActionResult> GetAverageHumidityForecast(string lat, string lon, int days)
         {
-            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+            if (days > 10 || days <= 0)
+                return BadRequest("Please choose a number of days from 1 --> 10");
 
-            ForecastResponse apiresponse = apicall.Result;
+            var apiresponse = await ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+            var avgHumidityDataDto = apiresponse.ToAvgHumidityDataDto();
+
+            return Ok(avgHumidityDataDto);
+        }
+
+        [HttpGet("GetSunriseForecast")]
+        public async Task<IActionResult> GetSunriseForecast(string lat, string lon, int days)
+        {
+            if(days > 10 || days <= 0)
+                return BadRequest("Please choose a number of days from 1 --> 10");
+
+            var apiresponse = await ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+
             List<SunriseDataDto> list = apiresponse.ToSunriseDataDto();
 
             return Ok(list);
         }
 
-        [HttpGet("Sunset")]
-        public async Task<IActionResult> GetSunset(string lat, string lon, int days)
+        [HttpGet("GetSunsetForecast")]
+        public async Task<IActionResult> GetSunsetForecast(string lat, string lon, int days)
         {
-            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+            if (days > 10 || days <= 0)
+                return BadRequest("Please choose a number of days from 1 --> 10");
 
-            ForecastResponse apiresponse = apicall.Result;
+            var apiresponse = await ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+
             List<SunsetDataDto> list = apiresponse.ToSunsetDataDto();
 
             return Ok(list);

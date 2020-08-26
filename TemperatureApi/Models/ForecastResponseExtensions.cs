@@ -30,6 +30,35 @@ namespace TemperatureApi.Models
             return list;
         }
 
+        public static AvgWindDataDto ToAvgWindDataDto(this ForecastResponse forecastResponse)
+        {
+            if (forecastResponse.forecast.forecastday.Length == 0)
+            {
+                return null;
+            }
+
+            var avgMaxWind_kph = 0.0;
+            var avgMaxWind_mph = 0.0;
+
+            foreach (var forecastDataDay in forecastResponse.forecast.forecastday)
+            {
+                avgMaxWind_kph += forecastDataDay.day.maxwind_kph;
+                avgMaxWind_mph += forecastDataDay.day.maxwind_mph;
+            }
+
+            avgMaxWind_kph /= forecastResponse.forecast.forecastday.Length;
+            avgMaxWind_mph /= forecastResponse.forecast.forecastday.Length;
+
+            return new AvgWindDataDto() 
+            { 
+                DateFrom = forecastResponse.forecast.forecastday.FirstOrDefault().date,
+                DateTo = forecastResponse.forecast.forecastday.LastOrDefault().date,
+                NumberOfDays = forecastResponse.forecast.forecastday.Length,
+                AvgMaxwind_kph = Math.Round(avgMaxWind_kph,2),
+                AvgMaxwind_mph = Math.Round(avgMaxWind_mph,2)
+            };
+        }
+
         public static PressureDataDto ToPressureDataDto(this ForecastResponse forecastResponse)
         {
 
@@ -74,6 +103,35 @@ namespace TemperatureApi.Models
             return list;
         }
 
+        public static AvgPrecipitationDataDto ToAvgPrecipitationDataDto(this ForecastResponse forecastResponse)
+        {
+            if (forecastResponse.forecast.forecastday.Length == 0)
+            {
+                return null;
+            }
+
+            var avgtotalprecip_mm = 0.0;
+            var avgtotalprecip_in = 0.0;
+
+            foreach (var dayData in forecastResponse.forecast.forecastday)
+            {
+                avgtotalprecip_mm += dayData.day.totalprecip_mm;
+                avgtotalprecip_in += dayData.day.totalprecip_in;
+            }
+
+            avgtotalprecip_mm /= forecastResponse.forecast.forecastday.Length;
+            avgtotalprecip_in /= forecastResponse.forecast.forecastday.Length;
+
+            return new AvgPrecipitationDataDto()
+            {
+                DateFrom = forecastResponse.forecast.forecastday.FirstOrDefault().date,
+                DateTo = forecastResponse.forecast.forecastday.LastOrDefault().date,
+                NumberOfDays = forecastResponse.forecast.forecastday.Length,
+                AvgTotalprecip_mm = Math.Round(avgtotalprecip_mm,2),
+                AvgTotalprecip_in = Math.Round(avgtotalprecip_in,2)
+            };
+        }
+
         public static List<HumidityDataDto> ToHumidityDataDto(this ForecastResponse forecastResponse)
         {
             var humidities = forecastResponse.forecast.forecastday;
@@ -83,10 +141,34 @@ namespace TemperatureApi.Models
             {
                 HumidityDataDto x = new HumidityDataDto();
                 x.date = h.date;
-                x.humidity = h.day.humidity;
+                x.humidity = h.day.avghumidity;
                 list.Add(x);
             }
             return list;
+        }
+
+        public static AvgHumidityDataDto ToAvgHumidityDataDto(this ForecastResponse forecastResponse)
+        {
+            if (forecastResponse.forecast.forecastday.Length == 0)
+            {
+                return null;
+            }
+            var avghumidity = 0.0;
+
+            foreach (var dayData in forecastResponse.forecast.forecastday)
+            {
+                avghumidity += dayData.day.avghumidity;
+            }
+
+            avghumidity /= forecastResponse.forecast.forecastday.Length;
+
+            return new AvgHumidityDataDto()
+            {
+                DateFrom = forecastResponse.forecast.forecastday.FirstOrDefault().date,
+                DateTo = forecastResponse.forecast.forecastday.LastOrDefault().date,
+                NumberOfDays = forecastResponse.forecast.forecastday.Length,
+                AvgHumidity = Math.Round(avghumidity, 2)
+            };
         }
 
         public static List<SunriseDataDto> ToSunriseDataDto(this ForecastResponse forecastResponse)
@@ -118,6 +200,5 @@ namespace TemperatureApi.Models
             }
             return list;
         }
-
     }
 }
