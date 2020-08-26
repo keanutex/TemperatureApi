@@ -28,15 +28,26 @@ namespace TemperatureApi.Controllers
         }
 
         [HttpGet("Pressure")]
-        public async Task<IActionResult> GetPressure(string lat, string lon, int days)
+        public async Task<IActionResult> GetPressure(string lat, string lon)
         {
-            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/current.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}");
 
             ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
-            List<PressureDataDto> list = apiresponse.ToPressureDataDto();
+            PressureDataDto pressureDataDto = apiresponse.ToPressureDataDto();
 
-            return Ok(list);
+            return Ok(pressureDataDto);
         }
+
+        //[HttpGet("Pressure")]
+        //public async Task<IActionResult> GetPressure(string lat, string lon, int days)
+        //{
+        //    var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+
+        //    ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+        //    List<PressureDataDto> list = apiresponse.ToPressureDataDto();
+
+        //    return Ok(list);
+        //}
 
         [HttpGet("Precipitation")]
         public async Task<IActionResult> GetPrecip(string lat, string lon, int days)
@@ -65,7 +76,7 @@ namespace TemperatureApi.Controllers
         {
             var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
 
-            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+            ForecastResponse apiresponse = apicall.Result;
             List<SunriseDataDto> list = apiresponse.ToSunriseDataDto();
 
             return Ok(list);
@@ -76,7 +87,7 @@ namespace TemperatureApi.Controllers
         {
             var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
 
-            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+            ForecastResponse apiresponse = apicall.Result;
             List<SunsetDataDto> list = apiresponse.ToSunsetDataDto();
 
             return Ok(list);

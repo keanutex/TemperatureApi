@@ -30,21 +30,31 @@ namespace TemperatureApi.Models
             return list;
         }
 
-        public static List<PressureDataDto> ToPressureDataDto(this ForecastResponse forecastResponse)
+        public static PressureDataDto ToPressureDataDto(this ForecastResponse forecastResponse)
         {
-            var pressures = forecastResponse.forecast.forecastday;
-            List<PressureDataDto> list = new List<PressureDataDto>();
 
-            foreach (ForecastDataDay p in pressures)
+            return new PressureDataDto()
             {
-                PressureDataDto x = new PressureDataDto();
-                x.date = p.date;
-                x.pressure_mb = p.hour.pressure_mb;
-                x.pressure_in = p.hour.pressure_in;
-                list.Add(x);
-            }
-            return list;
+                pressure_mb = forecastResponse.current.pressure_mb,
+                pressure_in = forecastResponse.current.pressure_in
+            };
         }
+
+        //public static List<PressureDataDto> ToPressureDataDto(this ForecastResponse forecastResponse)
+        //{
+        //    var pressures = forecastResponse.forecast.forecastday;
+        //    List<PressureDataDto> list = new List<PressureDataDto>();
+
+        //    foreach (ForecastDataDay p in pressures)
+        //    {
+        //        PressureDataDto x = new PressureDataDto();
+        //        x.date = p.date;
+        //        x.pressure_mb = p.hour.pressure_mb;
+        //        x.pressure_in = p.hour.pressure_in;
+        //        list.Add(x);
+        //    }
+        //    return list;
+        //}
 
         public static List<PrecipitationDataDto> ToPrecipitationDataDto(this ForecastResponse forecastResponse)
         {
@@ -73,7 +83,7 @@ namespace TemperatureApi.Models
             {
                 HumidityDataDto x = new HumidityDataDto();
                 x.date = h.date;
-                x.humidity = h.hour.humidity;
+                x.humidity = h.day.humidity;
                 list.Add(x);
             }
             return list;

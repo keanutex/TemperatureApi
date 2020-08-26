@@ -23,7 +23,6 @@ namespace TemperatureApi.Models
         public DayData day { get; set; }
         public AstroData astro { get; set; }
         public HourData hour { get; set; }
-        public ElevationData elevate { get; set; }
     }
 
     public class DayData
