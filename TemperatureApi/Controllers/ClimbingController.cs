@@ -81,17 +81,6 @@ namespace TemperatureApi.Controllers
 
             return Ok(list);
         }
-
-        [HttpGet("Elevation")]
-        public async Task<IActionResult> GetElevation(string lat, string lon)
-        {
-            var apicall = ApiCall.CallAsync<ForecastResponse>($"https://api.open-elevation.com/api/v1/lookup?locations={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}");
-
-            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
-            ElevationDataDto elevationDataDto = apiresponse.ToElevationDataDto();
-
-            return Ok(elevationDataDto);
-        }
     }
 }
    

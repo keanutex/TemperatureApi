@@ -109,17 +109,5 @@ namespace TemperatureApi.Models
             return list;
         }
 
-        public static ElevationDataDto ToElevationDataDto(this ForecastResponse forecastResponse)
-        {
-
-            return new ElevationDataDto()
-            {
-                elevation = forecastResponse.forecast.forecastday[0].elevate.elevation
-
-                //for(ForecastDataDay in forecastResponse.forecast)
-                //sunrises[]
-
-            };
-        }
     }
 }

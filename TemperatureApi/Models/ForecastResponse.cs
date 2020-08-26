@@ -91,11 +91,4 @@ namespace TemperatureApi.Models
         public double gust_mph { get; set; }
         public double gust_kph { get; set; }
     }
-
-    public class ElevationData
-    {
-        public int elevation { get; set; }
-        public double longitude { get; set; }
-        public double latitude { get; set; }
-    }
 }
