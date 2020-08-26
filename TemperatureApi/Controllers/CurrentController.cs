@@ -16,21 +16,36 @@ namespace TemperatureApi.Controllers
         [HttpGet("ByName")]
         public async Task<IActionResult> DailyByName(string cityName)
         {
-            var apicall = ApiCall.CallAsync<CurrentResponse>($"http://api.weatherapi.com/v1/current.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(cityName)}");
 
-            CurrentResponse apiresponse = (CurrentResponse)apicall.Result;
+            try
+            {
+                var apicall = ApiCall.CallAsync<CurrentResponse>($"http://api.weatherapi.com/v1/current.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(cityName)}");
 
-            return Ok(apiresponse);
+                CurrentResponse apiresponse = (CurrentResponse)apicall.Result;
+
+                return Ok(apiresponse);
+            }
+            catch(Exception e)
+            {
+                return NotFound(e);
+            }
         }
 
         [HttpGet("ByLonLat")]
         public async Task<IActionResult> CurrentByLonLat(string lat, string lon)
         {
-            var apicall = ApiCall.CallAsync<CurrentResponse>($"http://api.weatherapi.com/v1/current.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}");
+            try
+            {
+                var apicall = ApiCall.CallAsync<CurrentResponse>($"http://api.weatherapi.com/v1/current.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}");
 
-            CurrentResponse apiresponse = (CurrentResponse)apicall.Result;
+                CurrentResponse apiresponse = (CurrentResponse)apicall.Result;
 
-            return Ok(apiresponse);
+                return Ok(apiresponse);
+            }
+            catch(Exception e)
+            {
+                return NotFound();
+            }
         }
     }
 }

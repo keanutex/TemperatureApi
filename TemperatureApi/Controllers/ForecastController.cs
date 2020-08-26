@@ -16,21 +16,35 @@ namespace TemperatureApi.Controllers
         [HttpGet("ByName")]
         public async Task<IActionResult> ByName(string cityName, int days)
         {
-            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(cityName)}&days={HttpUtility.UrlEncode(days.ToString())}");
+            try
+            {
+                var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(cityName)}&days={HttpUtility.UrlEncode(days.ToString())}");
 
-            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+                ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
 
-            return Ok(apiresponse);
+                return Ok(apiresponse);
+            } catch (Exception)
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet("ByLonLat")]
         public async Task<IActionResult> ByLonLat(string lat, string lon, int days)
         {
-            var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+            try
+            {
+                var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
 
-            ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
+                ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
 
-            return Ok(apiresponse);
+                return Ok(apiresponse);
+            }
+            catch (Exception)
+            {
+
+                return NotFound();
+            }
         }
     }
 }

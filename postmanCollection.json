@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "bf3aae19-4bab-4bee-af92-ecd0fb58ccdd",
+		"name": "TemperatureApi",
+		"description": "Endpoints for a temperature Api vertical.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetWeatherByCityName",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtlYW51dGV4IiwibmJmIjoxNTk3ODUwNzk4LCJleHAiOjE1OTg0NTU1OTgsImlhdCI6MTU5Nzg1MDc5OH0.FZ4hpnjqjTZx9AvfUgf_-yT7lQ4k4D5IGeZqaq9hYJY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "tempapi.westeurope.cloudapp.azure.com/api/current/ByName?cityname=Johannesburg",
+					"host": [
+						"tempapi",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"path": [
+						"api",
+						"current",
+						"ByName"
+					],
+					"query": [
+						{
+							"key": "cityname",
+							"value": "Johannesburg",
+							"description": "Name of a city."
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetWeatherByCoOrd",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtlYW51dGV4IiwibmJmIjoxNTk3ODUwNzk4LCJleHAiOjE1OTg0NTU1OTgsImlhdCI6MTU5Nzg1MDc5OH0.FZ4hpnjqjTZx9AvfUgf_-yT7lQ4k4D5IGeZqaq9hYJY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Current/ByLonLat?lat=0&lon=0",
+					"host": [
+						"tempapi",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"path": [
+						"api",
+						"Current",
+						"ByLonLat"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "0",
+							"description": "Latitude of location."
+						},
+						{
+							"key": "lon",
+							"value": "0",
+							"description": "Longitude of location."
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetWeatherForecastByName",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Forecast/ByName?cityName=Pretoria&days=1",
+					"host": [
+						"tempapi",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"path": [
+						"api",
+						"Forecast",
+						"ByName"
+					],
+					"query": [
+						{
+							"key": "cityName",
+							"value": "Pretoria",
+							"description": "Name of a city."
+						},
+						{
+							"key": "days",
+							"value": "1",
+							"description": "Numbers of days to forecast. Maximum of 4 days."
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetWeatherForecastByCoOrd",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Forecast/ByLonLat?lat=0&lon=0&days=1",
+					"host": [
+						"tempapi",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"path": [
+						"api",
+						"Forecast",
+						"ByLonLat"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "0",
+							"description": "Latitude of location."
+						},
+						{
+							"key": "lon",
+							"value": "0",
+							"description": "Longitude of location."
+						},
+						{
+							"key": "days",
+							"value": "1",
+							"description": "Number of days to forecast. Maximum of 4 days."
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authenticate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "Username",
+							"value": "string",
+							"description": "Username used when registering.",
+							"type": "text"
+						},
+						{
+							"key": "Password",
+							"value": "string",
+							"description": "Password used when registering.",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Users/authenticate",
+					"host": [
+						"tempapi",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"path": [
+						"api",
+						"Users",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\",\r\n  \"username\": \"string\",\r\n  \"password\": \"string\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Users/register",
+					"host": [
+						"tempapi",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"path": [
+						"api",
+						"Users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
