@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TemperatureApi.Dtos;
 
 namespace TemperatureApi.Models
 {
     public static class ForecastResponseExtensions
     {
+        
         public static List<WindDataDto> ToWindDataDto(this ForecastResponse forecastResponse)
         {
             var winds = forecastResponse.forecast.forecastday;
@@ -32,11 +32,6 @@ namespace TemperatureApi.Models
 
         public static AvgWindDataDto ToAvgWindDataDto(this ForecastResponse forecastResponse)
         {
-            if (forecastResponse.forecast.forecastday.Length == 0)
-            {
-                return null;
-            }
-
             var avgMaxWind_kph = 0.0;
             var avgMaxWind_mph = 0.0;
 
@@ -105,11 +100,6 @@ namespace TemperatureApi.Models
 
         public static AvgPrecipitationDataDto ToAvgPrecipitationDataDto(this ForecastResponse forecastResponse)
         {
-            if (forecastResponse.forecast.forecastday.Length == 0)
-            {
-                return null;
-            }
-
             var avgtotalprecip_mm = 0.0;
             var avgtotalprecip_in = 0.0;
 
@@ -149,10 +139,6 @@ namespace TemperatureApi.Models
 
         public static AvgHumidityDataDto ToAvgHumidityDataDto(this ForecastResponse forecastResponse)
         {
-            if (forecastResponse.forecast.forecastday.Length == 0)
-            {
-                return null;
-            }
             var avghumidity = 0.0;
 
             foreach (var dayData in forecastResponse.forecast.forecastday)
@@ -186,6 +172,28 @@ namespace TemperatureApi.Models
             return list;
         }
 
+        public static AvgSunriseDataDto ToAvgSunriseDataDto(this ForecastResponse forecastResponse)
+        {
+            var dates = forecastResponse.forecast.forecastday;
+            var count = dates.Length;
+            double temp = 0D;
+            
+            for (int i = 0; i < count; i++)
+            {
+                DateTime cur = Convert.ToDateTime(dates[i].astro.sunrise);
+                temp += cur.Ticks / (double)count;
+            }
+            var average = new DateTime((long)temp);
+
+            return new AvgSunriseDataDto()
+            {
+                DateFrom = forecastResponse.forecast.forecastday.FirstOrDefault().date,
+                DateTo = forecastResponse.forecast.forecastday.LastOrDefault().date,
+                NumberOfDays = forecastResponse.forecast.forecastday.Length,
+                AvgSunrise = average.TimeOfDay.ToString()
+            };
+        }
+
         public static List<SunsetDataDto> ToSunsetDataDto(this ForecastResponse forecastResponse)
         {
             var sunsets = forecastResponse.forecast.forecastday;
@@ -199,6 +207,28 @@ namespace TemperatureApi.Models
                 list.Add(x);
             }
             return list;
+        }
+
+        public static AvgSunsetDataDto ToAvgSunsetDataDto(this ForecastResponse forecastResponse)
+        {
+            var dates = forecastResponse.forecast.forecastday;
+            var count = dates.Length;
+            double temp = 0D;
+
+            for (int i = 0; i < count; i++)
+            {
+                DateTime cur = Convert.ToDateTime(dates[i].astro.sunset);
+                temp += cur.Ticks / (double)count;
+            }
+            var average = new DateTime((long)temp);
+
+            return new AvgSunsetDataDto()
+            {
+                DateFrom = forecastResponse.forecast.forecastday.FirstOrDefault().date,
+                DateTo = forecastResponse.forecast.forecastday.LastOrDefault().date,
+                NumberOfDays = forecastResponse.forecast.forecastday.Length,
+                AvgSunset = average.TimeOfDay.ToString()
+            };
         }
     }
 }

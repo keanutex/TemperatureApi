@@ -11,6 +11,7 @@ namespace TemperatureApi.Controllers
     [ApiController]
     public class ClimbingController : ControllerBase
     {
+        [Authorize]
         [HttpGet("GetWindForecast")]
         public async Task<IActionResult> GetWindForecast(string lat, string lon, int days)
         {
@@ -119,6 +120,19 @@ namespace TemperatureApi.Controllers
             return Ok(list);
         }
 
+        [HttpGet("GetAverageSunriseForecast")]
+        public async Task<IActionResult> GetAverageSunriseForecast(string lat, string lon, int days)
+        {
+            if (days > 10 || days <= 0)
+                return BadRequest("Please choose a number of days from 1 --> 10");
+
+            var apiresponse = await ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+
+            var avgSunriseDataDto = apiresponse.ToAvgSunriseDataDto();
+
+            return Ok(avgSunriseDataDto);
+        }
+
         [HttpGet("GetSunsetForecast")]
         public async Task<IActionResult> GetSunsetForecast(string lat, string lon, int days)
         {
@@ -130,6 +144,19 @@ namespace TemperatureApi.Controllers
             List<SunsetDataDto> list = apiresponse.ToSunsetDataDto();
 
             return Ok(list);
+        }
+
+        [HttpGet("GetAverageSunsetForecast")]
+        public async Task<IActionResult> GetAverageSunsetForecast(string lat, string lon, int days)
+        {
+            if (days > 10 || days <= 0)
+                return BadRequest("Please choose a number of days from 1 --> 10");
+
+            var apiresponse = await ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
+
+            var avgSunsetDataDto = apiresponse.ToAvgSunsetDataDto();
+
+            return Ok(avgSunsetDataDto);
         }
     }
 }
