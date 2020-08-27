@@ -7,6 +7,7 @@ using TemperatureApi.Models;
 
 namespace TemperatureApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClimbingController : ControllerBase
