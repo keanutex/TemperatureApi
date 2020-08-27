@@ -647,7 +647,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api​/UserData​/CheckCondition?Condition=TODO",
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/UserData/CheckCondition?condition=rainy",
 							"protocol": "https",
 							"host": [
 								"tempapi",
@@ -657,15 +657,15 @@
 								"com"
 							],
 							"path": [
-								"api​",
-								"UserData​",
+								"api",
+								"UserData",
 								"CheckCondition"
 							],
 							"query": [
 								{
-									"key": "Condition",
-									"value": "TODO",
-									"description": "TODO"
+									"key": "condition",
+									"value": "rainy",
+									"description": "Weather condition to check if it exists."
 								}
 							]
 						}
