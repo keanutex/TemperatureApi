@@ -11,7 +11,6 @@ namespace TemperatureApi.Controllers
     [ApiController]
     public class ClimbingController : ControllerBase
     {
-        [Authorize]
         [HttpGet("GetWindForecast")]
         public async Task<IActionResult> GetWindForecast(string lat, string lon, int days)
         {
@@ -46,6 +45,7 @@ namespace TemperatureApi.Controllers
             return Ok(pressureDataDto);
         }
 
+        // WILL ADD IF THERE IS TIME:
         //[HttpGet("Pressure")]
         //public async Task<IActionResult> GetPressure(string lat, string lon, int days)
         //{
