@@ -7,6 +7,6 @@ namespace TemperatureApi.Dtos
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
         public int NumberOfDays { get; set; }
-        public double AvgHumidity { get; set; }
+        public double AvgHumidity_percentage { get; set; }
     }
 }

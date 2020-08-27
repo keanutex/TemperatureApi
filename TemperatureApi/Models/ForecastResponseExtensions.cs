@@ -157,7 +157,7 @@ namespace TemperatureApi.Models
             {
                 HumidityDataDto x = new HumidityDataDto();
                 x.date = h.date;
-                x.humidity = h.day.avghumidity;
+                x.humidity_percentage = h.day.avghumidity;
                 list.Add(x);
             }
             return list;
@@ -179,7 +179,7 @@ namespace TemperatureApi.Models
                 DateFrom = forecastResponse.forecast.forecastday.FirstOrDefault().date,
                 DateTo = forecastResponse.forecast.forecastday.LastOrDefault().date,
                 NumberOfDays = forecastResponse.forecast.forecastday.Length,
-                AvgHumidity = Math.Round(avghumidity, 2)
+                AvgHumidity_percentage = Math.Round(avghumidity, 2)
             };
         }
 
