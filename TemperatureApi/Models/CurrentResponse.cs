@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TemperatureApi.Models
 {
@@ -64,4 +60,5 @@ namespace TemperatureApi.Models
         public string icon { get; set; }
         public int code { get; set; }
     }
+    
 }

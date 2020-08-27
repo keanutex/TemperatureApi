@@ -1,11 +1,4 @@
-﻿using Dapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using TemperatureApi.Models;
 using TemperatureApi.Services;
 
