@@ -56,8 +56,8 @@ namespace TemperatureApi.Services
             {
                 using (IDbConnection db = new SqlConnection(connectionString))
                 {
-                    var x = new { user = userdata.user_id, city=userdata.city, temp=userdata.temp, cond=cond_id };
-                    var query = "INSERT INTO UserData (user_submitted_id, city, temp, condition_id) VALUES (@user, @city, @temp, @cond)";
+                    var x = new {city=userdata.city, temp=userdata.temp, cond=cond_id };
+                    var query = "INSERT INTO UserData ( city, temp, condition_id) VALUES ( @city, @temp, @cond)";
                     db.Execute(query, x);
                 }
                 return 1;
@@ -68,7 +68,7 @@ namespace TemperatureApi.Services
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var query = "SELECT TOP 10 * FROM UserData";
+                var query = "SELECT TOP 10 * FROM UserData a INNER JOIN Conditions b on a.condition_id = b.condition_id";
                 return db.Query<UserSubReturnModel>(query).ToList();
             }
         }

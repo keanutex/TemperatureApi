@@ -21,10 +21,15 @@ namespace TemperatureApi.Controllers
         [HttpGet("CheckCondition")]
         public async Task<IActionResult> CheckCondition(string condition)
         {
+            if (condition == null)
+            {
+                return BadRequest();
+            }
+
             int resp = _UserSubData.CheckIfConditionExists(condition);
             if (resp > 0)
             {
-                return Ok();
+                return Ok("The condition is valid");
             }
             else
             {
@@ -36,6 +41,11 @@ namespace TemperatureApi.Controllers
         [HttpPost("AddData")]
         public async Task<IActionResult> AddData([FromBody] UserSubModel condition)
         {
+            if (condition == null )
+            {
+                return BadRequest();
+            }
+
             int resp = _UserSubData.SubmitUserData(condition);
             if (resp == 1)
             {

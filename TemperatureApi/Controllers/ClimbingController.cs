@@ -39,6 +39,11 @@ namespace TemperatureApi.Controllers
         [HttpGet("GetCurrentPressure")]
         public async Task<IActionResult> GetCurrentPressure(string lat, string lon)
         {
+            if (lat == null || lon == null)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
             var apiresponse = await ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/current.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}");
 
             PressureDataDto pressureDataDto = apiresponse.ToPressureDataDto();

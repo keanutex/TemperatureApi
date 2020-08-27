@@ -10,6 +10,6 @@ namespace TemperatureApi.Models
 
         public string city { get; set; }
         public float temp { get; set; }
-        public string condition_id { get; set; }
+        public string condition { get; set; }
     }
 }
