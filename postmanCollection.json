@@ -7,245 +7,847 @@
 	},
 	"item": [
 		{
-			"name": "GetWeatherByCityName",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtlYW51dGV4IiwibmJmIjoxNTk3ODUwNzk4LCJleHAiOjE1OTg0NTU1OTgsImlhdCI6MTU5Nzg1MDc5OH0.FZ4hpnjqjTZx9AvfUgf_-yT7lQ4k4D5IGeZqaq9hYJY",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "tempapi.westeurope.cloudapp.azure.com/api/current/ByName?cityname=Johannesburg",
-					"host": [
-						"tempapi",
-						"westeurope",
-						"cloudapp",
-						"azure",
-						"com"
-					],
-					"path": [
-						"api",
-						"current",
-						"ByName"
-					],
-					"query": [
-						{
-							"key": "cityname",
-							"value": "Johannesburg",
-							"description": "Name of a city."
+			"name": "Climbing",
+			"item": [
+				{
+					"name": "GetWindForecast",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/Climbing/GetWindForecast?lat=0&lon=0&days=1",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"Climbing",
+								"GetWindForecast"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "0",
+									"description": "Latitude of location."
+								},
+								{
+									"key": "lon",
+									"value": "0",
+									"description": "Longitude of location."
+								},
+								{
+									"key": "days",
+									"value": "1",
+									"description": "Days to forecast."
+								}
+							]
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetWeatherByCoOrd",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtlYW51dGV4IiwibmJmIjoxNTk3ODUwNzk4LCJleHAiOjE1OTg0NTU1OTgsImlhdCI6MTU5Nzg1MDc5OH0.FZ4hpnjqjTZx9AvfUgf_-yT7lQ4k4D5IGeZqaq9hYJY",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Current/ByLonLat?lat=0&lon=0",
-					"host": [
-						"tempapi",
-						"westeurope",
-						"cloudapp",
-						"azure",
-						"com"
-					],
-					"path": [
-						"api",
-						"Current",
-						"ByLonLat"
-					],
-					"query": [
-						{
-							"key": "lat",
-							"value": "0",
-							"description": "Latitude of location."
-						},
-						{
-							"key": "lon",
-							"value": "0",
-							"description": "Longitude of location."
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetWeatherForecastByName",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Forecast/ByName?cityName=Pretoria&days=1",
-					"host": [
-						"tempapi",
-						"westeurope",
-						"cloudapp",
-						"azure",
-						"com"
-					],
-					"path": [
-						"api",
-						"Forecast",
-						"ByName"
-					],
-					"query": [
-						{
-							"key": "cityName",
-							"value": "Pretoria",
-							"description": "Name of a city."
-						},
-						{
-							"key": "days",
-							"value": "1",
-							"description": "Numbers of days to forecast. Maximum of 4 days."
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetWeatherForecastByCoOrd",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Forecast/ByLonLat?lat=0&lon=0&days=1",
-					"host": [
-						"tempapi",
-						"westeurope",
-						"cloudapp",
-						"azure",
-						"com"
-					],
-					"path": [
-						"api",
-						"Forecast",
-						"ByLonLat"
-					],
-					"query": [
-						{
-							"key": "lat",
-							"value": "0",
-							"description": "Latitude of location."
-						},
-						{
-							"key": "lon",
-							"value": "0",
-							"description": "Longitude of location."
-						},
-						{
-							"key": "days",
-							"value": "1",
-							"description": "Number of days to forecast. Maximum of 4 days."
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Authenticate",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "Username",
-							"value": "string",
-							"description": "Username used when registering.",
-							"type": "text"
-						},
-						{
-							"key": "Password",
-							"value": "string",
-							"description": "Password used when registering.",
-							"type": "text"
-						}
-					],
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Users/authenticate",
-					"host": [
-						"tempapi",
-						"westeurope",
-						"cloudapp",
-						"azure",
-						"com"
-					],
-					"path": [
-						"api",
-						"Users",
-						"authenticate"
-					]
+				{
+					"name": "GetAverageWindForecast",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/Climbing/GetAverageWindForecast?lat=0&lon=0&days=0",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"Climbing",
+								"GetAverageWindForecast"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "0",
+									"description": "Latitude of location."
+								},
+								{
+									"key": "lon",
+									"value": "0",
+									"description": "Longitude of location."
+								},
+								{
+									"key": "days",
+									"value": "0",
+									"description": "Days to forecast."
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCurrentPressure",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/Climbing/GetCurrentPressure?lat=0&lon=0",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"Climbing",
+								"GetCurrentPressure"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "0",
+									"description": "Latitude of location."
+								},
+								{
+									"key": "lon",
+									"value": "0",
+									"description": "Longitude of location,"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPrecipitationForecast",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/Climbing/GetCurrentPressure?lat=0&lon=0&days=0",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"Climbing",
+								"GetCurrentPressure"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "0",
+									"description": "Latitude of location."
+								},
+								{
+									"key": "lon",
+									"value": "0",
+									"description": "Longitude of location."
+								},
+								{
+									"key": "days",
+									"value": "0",
+									"description": "Days to forecast."
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAveragePrecipitationForecast",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/Climbing/GetAveragePrecipitationForecast?lat=0&lon=0&days=0",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"Climbing",
+								"GetAveragePrecipitationForecast"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "0",
+									"description": "Latitude of location."
+								},
+								{
+									"key": "lon",
+									"value": "0",
+									"description": "Longitude of location."
+								},
+								{
+									"key": "days",
+									"value": "0",
+									"description": "Days to forecast."
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetHumidityForecast",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/Climbing/GetHumidityForecast?lat=0&lon=0&days=0",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"Climbing",
+								"GetHumidityForecast"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "0",
+									"description": "Latitude of location."
+								},
+								{
+									"key": "lon",
+									"value": "0",
+									"description": "Longitude of location."
+								},
+								{
+									"key": "days",
+									"value": "0",
+									"description": "Days to forecast."
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAverageHumidtyForecast",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api​/Climbing​/GetAverageHumidityForecast?lat=0&lon=0&days=0",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api​",
+								"Climbing​",
+								"GetAverageHumidityForecast"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "0",
+									"description": "Latitude of location."
+								},
+								{
+									"key": "lon",
+									"value": "0",
+									"description": "Longitude of location."
+								},
+								{
+									"key": "days",
+									"value": "0",
+									"description": "Days to forecast."
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSunriseForecast",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/Climbing/GetSunriseForecast?lat=0&lon=0&days=0",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"Climbing",
+								"GetSunriseForecast"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "0",
+									"description": "Latitude of location."
+								},
+								{
+									"key": "lon",
+									"value": "0",
+									"description": "Longitude of location."
+								},
+								{
+									"key": "days",
+									"value": "0",
+									"description": "Days to forecast."
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAverageSunriseForecast",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api​/Climbing​/GetAverageSunriseForecast?lat=0&lon=0&days=0",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api​",
+								"Climbing​",
+								"GetAverageSunriseForecast"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "0",
+									"description": "Latitude of location."
+								},
+								{
+									"key": "lon",
+									"value": "0",
+									"description": "Longitude of location."
+								},
+								{
+									"key": "days",
+									"value": "0",
+									"description": "Days to forecast."
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSunsetForecast",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api​/Climbing​/GetSunsetForecast?lat=0&lon=0&days=0",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api​",
+								"Climbing​",
+								"GetSunsetForecast"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "0",
+									"description": "Latitude of location."
+								},
+								{
+									"key": "lon",
+									"value": "0",
+									"description": "Longitude of location."
+								},
+								{
+									"key": "days",
+									"value": "0",
+									"description": "Days to forecast."
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAverageSunsetForecast",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api​/Climbing​/GetAverageSunsetForecast?lat=0&lon=0&days=0",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api​",
+								"Climbing​",
+								"GetAverageSunsetForecast"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "0",
+									"description": "Latitude of location."
+								},
+								{
+									"key": "lon",
+									"value": "0",
+									"description": "Longitude of location."
+								},
+								{
+									"key": "days",
+									"value": "0",
+									"description": "Days to forecast."
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "Register",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\",\r\n  \"username\": \"string\",\r\n  \"password\": \"string\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Current",
+			"item": [
+				{
+					"name": "GetWeatherByCityName",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtlYW51dGV4IiwibmJmIjoxNTk3ODUwNzk4LCJleHAiOjE1OTg0NTU1OTgsImlhdCI6MTU5Nzg1MDc5OH0.FZ4hpnjqjTZx9AvfUgf_-yT7lQ4k4D5IGeZqaq9hYJY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/current/ByName?cityname=Johannesburg",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"current",
+								"ByName"
+							],
+							"query": [
+								{
+									"key": "cityname",
+									"value": "Johannesburg",
+									"description": "Name of a city."
+								}
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "tempapi.westeurope.cloudapp.azure.com/api/Users/register",
-					"host": [
-						"tempapi",
-						"westeurope",
-						"cloudapp",
-						"azure",
-						"com"
-					],
-					"path": [
-						"api",
-						"Users",
-						"register"
-					]
+				{
+					"name": "GetWeatherByCoOrd",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/Current/ByLonLat?lat=0&lon=0",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"Current",
+								"ByLonLat"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "0",
+									"description": "Latitude of location."
+								},
+								{
+									"key": "lon",
+									"value": "0",
+									"description": "Longitude of location."
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Forecast",
+			"item": [
+				{
+					"name": "GetWeatherForecastByName",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/Forecast/ByName?cityName=Pretoria&days=1",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"Forecast",
+								"ByName"
+							],
+							"query": [
+								{
+									"key": "cityName",
+									"value": "Pretoria",
+									"description": "Name of a city."
+								},
+								{
+									"key": "days",
+									"value": "1",
+									"description": "Numbers of days to forecast. Maximum of 4 days."
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetWeatherForecastByCoOrd",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/Forecast/ByLonLat?lat=0&lon=0&days=1",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"Forecast",
+								"ByLonLat"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "0",
+									"description": "Latitude of location."
+								},
+								{
+									"key": "lon",
+									"value": "0",
+									"description": "Longitude of location."
+								},
+								{
+									"key": "days",
+									"value": "1",
+									"description": "Number of days to forecast. Maximum of 4 days."
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "UserData",
+			"item": [
+				{
+					"name": "CheckCondition",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api​/UserData​/CheckCondition?Condition=TODO",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api​",
+								"UserData​",
+								"CheckCondition"
+							],
+							"query": [
+								{
+									"key": "Condition",
+									"value": "TODO",
+									"description": "TODO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddWeatherData",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": 0,\r\n    \"city\": \"string\",\r\n    \"temp\": 0,\r\n    \"condition\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/UserData/AddData",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"UserData",
+								"AddData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetWeatherData",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/UserData/GetData",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"UserData",
+								"GetData"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Authenticate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "Username",
+									"value": "string",
+									"description": "Username used when registering.",
+									"type": "text"
+								},
+								{
+									"key": "Password",
+									"value": "string",
+									"description": "Password used when registering.",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/Users/authenticate",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"Users",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\",\r\n  \"username\": \"string\",\r\n  \"password\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://tempapi.westeurope.cloudapp.azure.com/api/Users/register",
+							"protocol": "https",
+							"host": [
+								"tempapi",
+								"westeurope",
+								"cloudapp",
+								"azure",
+								"com"
+							],
+							"path": [
+								"api",
+								"Users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "54b9da50-4c41-4fbd-bf3b-9b702bb865a1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "36a1f46e-214b-45fd-9db0-eb9e2f1ec0ba",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"protocolProfileBehavior": {}
