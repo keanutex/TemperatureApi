@@ -1,0 +1,14 @@
+{
+	"id": "c2dd2f42-218f-4863-9050-a8c3a0369508",
+	"name": "TemperatureApi",
+	"values": [
+		{
+			"key": "token",
+			"value": "",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2020-08-27T14:08:46.140Z",
+	"_postman_exported_using": "Postman/7.30.1"
+}
