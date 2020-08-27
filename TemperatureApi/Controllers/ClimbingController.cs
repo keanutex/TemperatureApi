@@ -15,6 +15,11 @@ namespace TemperatureApi.Controllers
         [HttpGet("GetWindForecast")]
         public async Task<IActionResult> GetWindForecast(string lat, string lon, int days)
         {
+            if (lat == null || lon == null)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
             if (days > 10 || days <= 0)
                 return BadRequest("Please choose a number of days from 1 --> 10");
 
@@ -27,6 +32,11 @@ namespace TemperatureApi.Controllers
         [HttpGet("GetAverageWindForecast")]
         public async Task<IActionResult> GetAverageWindForecast(string lat, string lon, int days)
         {
+            if (lat == null || lon == null)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
             if (days > 10 || days <= 0)
                 return BadRequest("Please choose a number of days from 1 --> 10");
 
@@ -54,6 +64,11 @@ namespace TemperatureApi.Controllers
         [HttpGet("GetPrecipitationForecast")]
         public async Task<IActionResult> GetPrecip(string lat, string lon, int days)
         {
+            if (lat == null || lon == null)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
             if (days > 10 || days <= 0)
                 return BadRequest("Please choose a number of days from 1 --> 10");
 
@@ -67,6 +82,11 @@ namespace TemperatureApi.Controllers
         [HttpGet("GetAveragePrecipitationForecast")]
         public async Task<IActionResult> GetAveragePrecipitationForecast(string lat, string lon, int days)
         {
+            if (lat == null || lon == null)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
             if (days > 10 || days <= 0)
                 return BadRequest("Please choose a number of days from 1 --> 10");
 
@@ -79,6 +99,11 @@ namespace TemperatureApi.Controllers
         [HttpGet("GetHumidityForecast")]
         public async Task<IActionResult> GetHumidityForecast(string lat, string lon, int days)
         {
+            if (lat == null || lon == null)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
             if (days > 10 || days <= 0)
                 return BadRequest("Please choose a number of days from 1 --> 10");
 
@@ -92,6 +117,11 @@ namespace TemperatureApi.Controllers
         [HttpGet("GetAverageHumidityForecast")]
         public async Task<IActionResult> GetAverageHumidityForecast(string lat, string lon, int days)
         {
+            if (lat == null || lon == null)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
             if (days > 10 || days <= 0)
                 return BadRequest("Please choose a number of days from 1 --> 10");
 
@@ -104,7 +134,12 @@ namespace TemperatureApi.Controllers
         [HttpGet("GetSunriseForecast")]
         public async Task<IActionResult> GetSunriseForecast(string lat, string lon, int days)
         {
-            if(days > 10 || days <= 0)
+            if (lat == null || lon == null)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
+            if (days > 10 || days <= 0)
                 return BadRequest("Please choose a number of days from 1 --> 10");
 
             var apiresponse = await ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
@@ -117,6 +152,11 @@ namespace TemperatureApi.Controllers
         [HttpGet("GetAverageSunriseForecast")]
         public async Task<IActionResult> GetAverageSunriseForecast(string lat, string lon, int days)
         {
+            if (lat == null || lon == null)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
             if (days > 10 || days <= 0)
                 return BadRequest("Please choose a number of days from 1 --> 10");
 
@@ -130,6 +170,11 @@ namespace TemperatureApi.Controllers
         [HttpGet("GetSunsetForecast")]
         public async Task<IActionResult> GetSunsetForecast(string lat, string lon, int days)
         {
+            if (lat == null || lon == null)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
             if (days > 10 || days <= 0)
                 return BadRequest("Please choose a number of days from 1 --> 10");
 
@@ -143,6 +188,11 @@ namespace TemperatureApi.Controllers
         [HttpGet("GetAverageSunsetForecast")]
         public async Task<IActionResult> GetAverageSunsetForecast(string lat, string lon, int days)
         {
+            if (lat == null || lon == null)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
             if (days > 10 || days <= 0)
                 return BadRequest("Please choose a number of days from 1 --> 10");
 
