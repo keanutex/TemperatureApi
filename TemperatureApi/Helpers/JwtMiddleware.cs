@@ -23,9 +23,7 @@ namespace TemperatureApi.Helpers
 
         public async Task Invoke(HttpContext context, UserService userService)
         {
-            //string authHeader = context.Request.Headers["Authorization"];
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            //string token = context.Request.Headers["Authorization"];
 
             if (token != null)
                 attachUserToContext(context, userService, token);
@@ -38,17 +36,13 @@ namespace TemperatureApi.Helpers
             try
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                //var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateLifetime = false, // Because there is no expiration in the generated token
                     ValidateAudience = false, // Because there is no audiance in the generated token
                     ValidateIssuer = false,   // Because there is no issuer in the generated token
-                    //ValidIssuer = "Sample",
-                    //ValidAudience = "Sample",
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Secret)),
                     ValidateIssuerSigningKey = true,
-                    //IssuerSigningKey = new SymmetricSecurityKey(key),
                     // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);

@@ -11,8 +11,7 @@ namespace TemperatureApi.Dtos
         public DateTime date { get; set; }
         public double totalprecip_mm { get; set; }
         public double totalprecip_in { get; set; }
-        //public double precip_mm { get; set; }
-        //public double precip_in { get; set; }
+
     }
 
 }

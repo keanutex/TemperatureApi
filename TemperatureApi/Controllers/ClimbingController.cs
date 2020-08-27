@@ -46,18 +46,6 @@ namespace TemperatureApi.Controllers
             return Ok(pressureDataDto);
         }
 
-        // WILL ADD IF THERE IS TIME:
-        //[HttpGet("Pressure")]
-        //public async Task<IActionResult> GetPressure(string lat, string lon, int days)
-        //{
-        //    var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");
-
-        //    ForecastResponse apiresponse = (ForecastResponse)apicall.Result;
-        //    List<PressureDataDto> list = apiresponse.ToPressureDataDto();
-
-        //    return Ok(list);
-        //}
-
         [HttpGet("GetPrecipitationForecast")]
         public async Task<IActionResult> GetPrecip(string lat, string lon, int days)
         {

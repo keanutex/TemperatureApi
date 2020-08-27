@@ -9,8 +9,7 @@ namespace TemperatureApi.Dtos
         public int NumberOfDays { get; set; }
         public double AvgTotalprecip_mm { get; set; }
         public double AvgTotalprecip_in { get; set; }
-        //public double precip_mm { get; set; }
-        //public double precip_in { get; set; }
+
     }
 
 }

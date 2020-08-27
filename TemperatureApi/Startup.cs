@@ -55,14 +55,8 @@ namespace TemperatureApi
                 c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securityScheme);
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
-                    // defines scope - without a protocol use an empty array for global scope
                     { securityScheme, Array.Empty<string>() }
                 });
-
-                /*var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                   var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                   c.IncludeXmlComments(xmlPath);*/
-                //});
             });
 
         }

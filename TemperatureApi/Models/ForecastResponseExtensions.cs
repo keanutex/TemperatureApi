@@ -7,7 +7,6 @@ namespace TemperatureApi.Models
 {
     public static class ForecastResponseExtensions
     {
-        
         public static List<WindDataDto> ToWindDataDto(this ForecastResponse forecastResponse)
         {
             var winds = forecastResponse.forecast.forecastday;
@@ -19,42 +18,10 @@ namespace TemperatureApi.Models
                 x.date = w.date;
                 x.maxwind_mph = w.day.maxwind_mph;
                 x.maxwind_kph = w.day.maxwind_kph;
-
-                // WILL ADD IF THERE IS TIME:
-                //x.wind_mph = w.hour.wind_mph;
-                //x.wind_kph = w.hour.wind_kph;
-                //x.wind_degree = w.hour.wind_degree;
-                //x.wind_dir = w.hour.wind_dir;
-                //x.gust_mph = w.hour.gust_mph;
-                //x.gust_kph = w.hour.gust_kph;
                 list.Add(x);
             }
             return list;
         }
-
-        // WILL ADD IF THERE IS TIME:
-        //public static List<WindDataDto> ToWindDataDto(this ForecastResponse forecastResponse)
-        //{
-        //    var winds = forecastResponse.forecast.forecastday;
-        //    List<WindDataDto> list = new List<WindDataDto>();
-
-        //    foreach (ForecastDataDay w in winds)
-        //    {
-        //        WindDataDto x = new WindDataDto();
-        //        x.date = w.date;
-        //        x.maxwind_mph = w.day.maxwind_mph;
-        //        x.maxwind_kph = w.day.maxwind_kph;
-        //        //x.wind_mph = w.hour.wind_mph;
-        //        //x.wind_kph = w.hour.wind_kph;
-        //        //x.wind_degree = w.hour.wind_degree;
-        //        //x.wind_dir = w.hour.wind_dir;
-        //        //x.gust_mph = w.hour.gust_mph;
-        //        //x.gust_kph = w.hour.gust_kph;
-        //        list.Add(x);
-        //    }
-        //    return list;
-        //}
-
 
         public static AvgWindDataDto ToAvgWindDataDto(this ForecastResponse forecastResponse)
         {
@@ -90,22 +57,6 @@ namespace TemperatureApi.Models
             };
         }
 
-        //public static List<PressureDataDto> ToPressureDataDto(this ForecastResponse forecastResponse)
-        //{
-        //    var pressures = forecastResponse.forecast.forecastday;
-        //    List<PressureDataDto> list = new List<PressureDataDto>();
-
-        //    foreach (ForecastDataDay p in pressures)
-        //    {
-        //        PressureDataDto x = new PressureDataDto();
-        //        x.date = p.date;
-        //        x.pressure_mb = p.hour.pressure_mb;
-        //        x.pressure_in = p.hour.pressure_in;
-        //        list.Add(x);
-        //    }
-        //    return list;
-        //}
-
         public static List<PrecipitationDataDto> ToPrecipitationDataDto(this ForecastResponse forecastResponse)
         {
             var precipitations = forecastResponse.forecast.forecastday;
@@ -117,8 +68,6 @@ namespace TemperatureApi.Models
                 x.date = p.date;
                 x.totalprecip_mm = p.day.totalprecip_mm;
                 x.totalprecip_in = p.day.totalprecip_in;
-                //x.precip_mm = p.hour.precip_mm;
-                //x.precip_in = p.hour.precip_in;
                 list.Add(x);
             }
             return list;
