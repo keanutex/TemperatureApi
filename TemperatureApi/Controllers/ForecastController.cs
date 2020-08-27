@@ -14,6 +14,11 @@ namespace TemperatureApi.Controllers
         [HttpGet("ByName")]
         public async Task<IActionResult> ByName(string cityName, int days)
         {
+            if (cityName == null || days <= 0)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
             try
             {
                 var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(cityName)}&days={HttpUtility.UrlEncode(days.ToString())}");
@@ -30,6 +35,11 @@ namespace TemperatureApi.Controllers
         [HttpGet("ByLonLat")]
         public async Task<IActionResult> ByLonLat(string lat, string lon, int days)
         {
+            if (lat == null || lon == null || days <= 0)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
             try
             {
                 var apicall = ApiCall.CallAsync<ForecastResponse>($"http://api.weatherapi.com/v1/forecast.json?key={Secret.weatherapikey}&q={HttpUtility.UrlEncode(lat)},{HttpUtility.UrlEncode(lon)}&days={HttpUtility.UrlEncode(days.ToString())}");

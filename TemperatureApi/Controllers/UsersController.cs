@@ -18,6 +18,11 @@ namespace TemperatureApi.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromForm] AuthenticateRequest model)
         {
+            if (model == null)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
             var response = _userService.Authenticate(model);
 
             if (response == null)
@@ -29,6 +34,11 @@ namespace TemperatureApi.Controllers
         [HttpPost("register")]
         public IActionResult Register([FromBody] User user)
         {
+            if (user == null)
+            {
+                return BadRequest("Invalid Data Entered");
+            }
+
             var response = _userService.registerUser(user);
 
             if (response.Equals("User already exists"))
